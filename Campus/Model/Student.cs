@@ -11,7 +11,12 @@ namespace Campus.Model
     {
         public string IdStudent_code { get; set; }
 
-        public List<Course> Courses { get; set; }
+        public List<Course>? Courses { get; set; }
+
+        public Student() : base(string.Empty, string.Empty, string.Empty) 
+        {
+
+        }
 
         public Student(string fiscalCode, string name, string surname,  string idStudent_code, List<Course>? courses) : base(fiscalCode, name, surname)
         {

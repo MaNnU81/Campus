@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Campus.Model
 {
@@ -10,10 +11,16 @@ namespace Campus.Model
     {
         public string IdTeacher_code { get; set; }
         public string Subject { get; set; }
-        public List<Course> Courses { get; set; }
+        public List<Course>? Courses { get; set; }
 
 
-        public Teacher(string fiscalCode, string name, string surname, string idTeacher_code, string subject, List<Course> courses)
+        public Teacher()
+       : base(string.Empty, string.Empty, string.Empty)
+        {
+          
+        }
+
+        public Teacher(string fiscalCode, string name, string surname, string idTeacher_code, string subject, List<Course>? courses)
             : base(fiscalCode, name, surname)
         {
             IdTeacher_code = idTeacher_code;
@@ -21,7 +28,7 @@ namespace Campus.Model
             Courses = courses;
         }
 
-        public Teacher(string subject, List<Course>? courses) : base(fiscalCode, name, surname)
+        public Teacher(string fiscalCode, string name, string surname, string subject, List<Course>? courses) : base(fiscalCode, name, surname)
         {
             Subject = subject;
             Courses = courses ?? new List<Course>();

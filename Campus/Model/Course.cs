@@ -8,17 +8,21 @@
 
         public int MaxCapacity { get; set; }
 
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         public string IdTeacher_code { get; set; }
-        public Teacher Teacher { get; set; }
-        public List<Student> Students { get; set; }
+        public Teacher? Teacher { get; set; }
+        public List<Student>? Students { get; set; }
+
+        public Course()
+        {
+        }
 
         public Course(
          string idCourse_code,
          string course_Name,
          int maxCapacity,
-         string description,
+         string? description,
          string idTeacher_code,
          Teacher? teacher,
          List<Student>? students)
@@ -29,7 +33,7 @@
             Description = description;
             IdTeacher_code = idTeacher_code;
             Teacher = teacher;
-            Students = students;
+            Students = students ?? new List<Student>();
         }
     }
 }

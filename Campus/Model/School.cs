@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Campus.Model
 {
@@ -16,81 +17,74 @@ namespace Campus.Model
 
 
 
-        public List<Student> Students { get; set; }
-        public List<Teacher> Teachers { get; set; }
-        public List<Course> Courses { get; set; }
+        public List<Student>? Students { get; set; }
+        public List<Teacher>? Teachers { get; set; }
+     
 
-        public School(string idSchool_code, string siteName, string address, List<Student>? students, List<Teacher>? teachers, List<Course>? courses)
+      
+        public School(string idSchool_code, string siteName, string address, List<Student>? students, List<Teacher>? teachers)
         {
             IdSchool_code = idSchool_code;
             SiteName = siteName;
             Address = address;
             Students = students ?? new List<Student>();
             Teachers = teachers ?? new List<Teacher>();
-            Courses = courses ?? new List<Course>();
+            
         }
 
-        public GetAllTeachers(List<Teacher> teachers)
+
+        public School()
         {
-            foreach (var teacher in teachers)
-            {
-                Console.WriteLine($"ID: {teacher.IdTeacher_code}, Teacher: {teacher.Name} {teacher.Surname}, Subject: {teacher.Subject}");
-            }
         }
 
-        public GetAllStudents(List<Student> students)
+        public School(string idSchool_code, string siteName, string address, List<Teacher> teachers, List<Student> students)
         {
-            foreach (var student in students)
-            {
-                Console.WriteLine($" ID: {student.IdStudent_code}, Student: {student.Name} {student.Surname}");
-            }
+            IdSchool_code = idSchool_code;
+            SiteName = siteName;
+            Address = address;
+            Teachers = teachers;
+            Students = students;
         }
 
-        public GetAllCourses(List<Course> courses)
+        internal List<Student> GetStudents()
         {
-            var courses = new List<Course>();
-
-
-            foreach (var course in courses)
-            {
-                Console.WriteLine($" ID: {course.IdCourse_code}, Course: {course.Course_Name}");
-            }
-
-            courses.Add(course);
+            return Students;
         }
 
-        public GetAllCourseByIdTeacher(List<Course> courses, string idTeacher)
+        internal List<Teacher> GetTeachers()
         {
-            var coursesByTeacher = courses.Where(c => c.IdTeacher_code == idTeacher).ToList();
-            if (coursesByTeacher.Count > 0)
+            return Teachers;
+        }
+
+
+        
+
+        internal List<Course> GetCoursesByTeacherId(string idSchool_code)
+        {
+     foreach (var teacher in Teachers)
             {
-                foreach (var course in coursesByTeacher)
+                if (teacher.IdTeacher_code == idSchool_code)
                 {
-                    Console.WriteLine($"ID: {course.IdCourse_code}, Course: {course.Course_Name}");
+                    return teacher.Courses;
                 }
             }
-            else
-            {
-                Console.WriteLine("No courses found for this teacher.");
-            }
+            return new List<Course>();
         }
 
-
-        public GetAllCourseByIdStudent(List<Course> courses, string idStudent)
+        internal List<Course> GetCoursesByStudentId(string IdStudent_code)
         {
-            var coursesByStudent = courses.Where(c => c.Students.Any(s => s.IdStudent_code == idStudent)).ToList();
-            if (coursesByStudent.Count > 0)
+         foreach (var student in Students)
             {
-                foreach (var course in coursesByStudent)
+                if (student.IdStudent_code == IdStudent_code)
                 {
-                    Console.WriteLine($"ID: {course.IdCourse_code}, Course: {course.Course_Name}");
+                    return student.Courses;
                 }
             }
-            else
-            {
-                Console.WriteLine("No courses found for this student.");
-            }
+            return new List<Course>();
         }
+
+
+
 
     }
 }
