@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace Campus.Model
 {
-    internal abstract class Person
+    public abstract class Person
     {
         public string FiscalCode { get; set; }
         public string Name { get; set; }
